@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台北新板希爾頓酒店｜交通懶人包</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+    body { font-family: 'Noto Sans TC', sans-serif; }
+    .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-12">
+
+  <!-- 頂部導航 / 標題 -->
+  <header class="bg-slate-900 text-white py-8 px-4 border-b-4 border-amber-500 shadow-md">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-sm font-medium mb-3">
+        <span>📍 新北市板橋區民權路 88 號</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-wide">台北新板希爾頓酒店</h1>
+      <p class="text-slate-300 mt-2 text-sm md:text-base">五鐵共構超便利・全台抵達交通懶人包</p>
+
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <button onclick="copyAddress()" class="bg-white/10 hover:bg-white/20 text-white text-xs md:text-sm px-4 py-2 rounded-lg transition border border-white/20 flex items-center gap-2">
+          <i class="fa-regular fa-copy"></i> <span id="copyText">複製酒店地址</span>
+        </button>
+        <a href="https://maps.google.com/?q=台北新板希爾頓酒店" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold text-xs md:text-sm px-4 py-2 rounded-lg transition flex items-center gap-2">
+          <i class="fa-solid fa-location-arrow"></i> 開啟 Google Maps 導航
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 mt-8">
+
+    <!-- 快速下拉出發地篩選 -->
+    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <label for="citySelect" class="text-sm font-medium text-slate-600 flex items-center gap-2">
+        <i class="fa-solid fa-compass text-amber-600"></i> 快速尋找出發縣市：
+      </label>
+      <select id="citySelect" onchange="filterCity(this.value)" class="w-full sm:w-64 p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+        <option value="">-- 請選擇您的出發地 --</option>
+        <option value="north">雙北、基隆、桃園機場</option>
+        <option value="central">台中、彰化、苗栗、南投、雲林</option>
+        <option value="south">嘉義、台南、高雄、屏東</option>
+        <option value="east">宜蘭、花蓮、台東</option>
+        <option value="drive">自行開車 / 停車場查詢</option>
+      </select>
+    </div>
+
+    <!-- 分頁按鈕 -->
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-6 text-sm">
+      <button onclick="switchTab('north')" id="tab-north" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🏙️ 北部</button>
+      <button onclick="switchTab('central')" id="tab-central" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🚅 中部</button>
+      <button onclick="switchTab('south')" id="tab-south" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🌊 南部</button>
+      <button onclick="switchTab('east')" id="tab-east" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🌲 東部</button>
+      <button onclick="switchTab('drive')" id="tab-drive" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🚗 自駕停車</button>
+      <button onclick="switchTab('walk')" id="tab-walk" class="tab-btn py-2.5 px-3 rounded-lg border font-medium bg-white text-slate-700 shadow-sm border-slate-200 hover:bg-slate-100 transition">🚶 徒步抵達</button>
+    </div>
+
+    <!-- 內容卡片區域 -->
+    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 min-h-[350px]">
+
+      <!-- 北部 -->
+      <div id="content-north" class="tab-content">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🏙️</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">北部出發（雙北／基隆／桃機）</h2>
+            <p class="text-xs text-slate-500">捷運板南線、環狀線及直達客運超便利</p>
+          </div>
+        </div>
+        <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-lg text-slate-700 text-sm leading-relaxed mb-5">
+          <strong>一段話速讀：</strong>雙北旅客搭乘捷運板南線至「板橋站」2 號出口（或環狀線 4 號出口），出站沿縣民大道直行至民權路右轉，步行約 3～5 分鐘即達；基隆與桃機旅客可選搭直達客運（基隆搭 1070、桃機搭大有巴士 1962）至「板橋客運站」，或從機場捷運轉乘高鐵至板橋站，免搬行李輕鬆抵達。
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><i class="fa-solid fa-train-subway text-blue-600 mt-1"></i> <span><strong>捷運板南線（藍線）</strong>：於「板橋站」2 號出口出站，步行約 4 分鐘。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-train-subway text-yellow-600 mt-1"></i> <span><strong>捷運環狀線（黃線）</strong>：於「板橋站」4 號出口出站，步行約 5～7 分鐘。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-bus text-slate-500 mt-1"></i> <span><strong>市區公車</strong>：搭乘 307、810、965、99、藍 37 等至「新北板橋公車站」。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-plane-departure text-emerald-600 mt-1"></i> <span><strong>桃園機場抵達</strong>：搭乘大有巴士 1962 直達板橋客運站，或搭機捷至 A18 轉高鐵直達板橋。</span></li>
+        </ul>
+      </div>
+
+      <!-- 中部 -->
+      <div id="content-central" class="tab-content hidden">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🚅</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">中部出發（苗栗／台中／彰化／南投／雲林）</h2>
+            <p class="text-xs text-slate-500">高鐵首選直達，省去進台北市區轉乘時間</p>
+          </div>
+        </div>
+        <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-lg text-slate-700 text-sm leading-relaxed mb-5">
+          <strong>一段話速讀：</strong>最推薦搭乘高鐵直達「高鐵板橋站」，台中出發最快只要 39 分鐘，下車免進台北市區人擠人；想悠閒搭車亦可選搭台鐵對號列車直達板橋車站，或搭乘統聯、國光、和欣客運至板橋客運站，出站後穿過站前新站路或沿縣民大道步行約 3～5 分鐘即可登記入住。
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><i class="fa-solid fa-bolt text-amber-600 mt-1"></i> <span><strong>台灣高鐵（最推✨）</strong>：直達「高鐵板橋站」，台中出發僅 39 分鐘。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-train text-slate-600 mt-1"></i> <span><strong>台鐵火車</strong>：搭乘自強號／普悠瑪號直達「板橋火車站」。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-bus text-slate-500 mt-1"></i> <span><strong>國道客運</strong>：統聯、國光、和欣客運直達「板橋客運站」。</span></li>
+        </ul>
+      </div>
+
+      <!-- 南部 -->
+      <div id="content-south" class="tab-content hidden">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🌊</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">南部出發（嘉義／台南／高雄／屏東）</h2>
+            <p class="text-xs text-slate-500">免去台北車站大迷宮，板橋站下車最省力</p>
+          </div>
+        </div>
+        <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-lg text-slate-700 text-sm leading-relaxed mb-5">
+          <strong>一段話速讀：</strong>首推搭乘台灣高鐵直奔「高鐵板橋站」，左營出發最快僅需 1 小時 30 分鐘，直接避開台北車站複雜的換線迷宮；不趕時間的旅客可選搭台鐵西部幹線自強號直達板橋站，下車後從車站「南 3 門」出站步行約 3 分鐘，過個馬路即抵達飯店，動線極為順暢省力。
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><i class="fa-solid fa-bolt text-amber-600 mt-1"></i> <span><strong>台灣高鐵</strong>：直達「高鐵板橋站」，左營 90 分鐘直達。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-train text-slate-600 mt-1"></i> <span><strong>台鐵火車</strong>：搭乘西部幹線對號列車直達「板橋火車站」。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-door-open text-emerald-600 mt-1"></i> <span><strong>下車動線</strong>：建議由高鐵／台鐵地下月台出站後，走上 1F「南 3 門」前往民權路。</span></li>
+        </ul>
+      </div>
+
+      <!-- 東部 -->
+      <div id="content-east" class="tab-content hidden">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🌲</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">東部出發（宜蘭／花蓮／台東）</h2>
+            <p class="text-xs text-slate-500">東部幹線一車到底直達板橋，舒適免換車</p>
+          </div>
+        </div>
+        <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-lg text-slate-700 text-sm leading-relaxed mb-5">
+          <strong>一段話速讀：</strong>最推薦搭乘台鐵東部幹線（新自強號／普悠瑪號），多數車次一車到底直達「板橋車站」，花蓮出發最快約 2 小時 15 分鐘即可抵達；宜蘭旅客除搭火車外，亦可選搭葛瑪蘭客運 1915 直達「板橋客運站」，下車後步行 3～4 分鐘即可步入飯店大廳。
+        </div>
+        <ul class="space-y-3 text-sm text-slate-600">
+          <li class="flex items-start gap-2"><i class="fa-solid fa-train text-slate-600 mt-1"></i> <span><strong>台鐵東部幹線（最推✨）</strong>：新自強號 EMU3000 / 普悠瑪直達板橋站。</span></li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-bus text-slate-500 mt-1"></i> <span><strong>宜蘭客運</strong>：葛瑪蘭客運 1915 直達「板橋客運站」。</span></li>
+        </ul>
+      </div>
+
+      <!-- 自駕停車 -->
+      <div id="content-drive" class="tab-content hidden">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🚗</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">自駕開車與周邊停車指引</h2>
+            <p class="text-xs text-slate-500">台 65 / 台 64 快速道路快速抵達</p>
+          </div>
+        </div>
+        <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-lg text-slate-700 text-sm leading-relaxed mb-5">
+          <strong>一段話速讀：</strong>導航設定「台北新板希爾頓酒店」（民權路 88 號），走國道 1 號銜接台 65 線或國道 3 號銜接台 64 線皆可快速抵達，地下停車場車位採先到先停（遇滿位可轉停步行 3 分鐘的新北市政府市民廣場地下停車場）；若遇雨天，大眾運輸旅客出站後可走地下街連通道往誠品生活／新北市政府方向，再上到地面人行道，大幅減少淋雨時間。
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mt-4">
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <h4 class="font-semibold text-slate-700 mb-1">🅿️ 酒店地下停車場</h4>
+            <p class="text-slate-600 text-xs">車道入口位於<strong>民權路側</strong>（與新板凱撒共用入口），車位採先到先停制。</p>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+            <h4 class="font-semibold text-slate-700 mb-1">🅿️ 備用停車場推薦</h4>
+            <p class="text-slate-600 text-xs">若遇滿位可停「市民廣場地下停車場」（步行約 3 分鐘）或「特專三停車場」。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 徒步指南 -->
+      <div id="content-walk" class="tab-content hidden">
+        <div class="flex items-center gap-3 border-b pb-4 mb-4">
+          <span class="text-3xl">🚶</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">最後 300 公尺徒步路線指引</h2>
+            <p class="text-xs text-slate-500">出站後輕鬆漫步 3～5 分鐘抵達大廳</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-600 border-collapse">
+            <thead class="bg-slate-100 text-slate-700 font-semibold">
+              <tr>
+                <th class="p-3 border">抵達樞紐</th>
+                <th class="p-3 border">建議出口</th>
+                <th class="p-3 border">步行動線</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-3 border font-medium">🚅 高鐵 / 台鐵</td>
+                <td class="p-3 border">南 3 門</td>
+                <td class="p-3 border">出門右轉沿縣民大道直走，至民權路右轉（約 3 分鐘）</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">🚇 捷運板南線</td>
+                <td class="p-3 border">2 號出口</td>
+                <td class="p-3 border">沿縣民大道直行遇民權路即達（約 4 分鐘）</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">🚇 捷運環狀線</td>
+                <td class="p-3 border">4 號出口</td>
+                <td class="p-3 border">沿縣民大道步行約 5～7 分鐘</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-4 p-3 bg-sky-50 text-sky-800 rounded-lg text-xs flex items-center gap-2">
+          <i class="fa-solid fa-cloud-showers-heavy"></i>
+          <span><strong>雨天小撇步：</strong>可走板橋車站地下連通道至「誠品生活／新北市政府」，再就近上地面步行至酒店。</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部分享功能卡 -->
+    <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-xs text-amber-900">
+        <p class="font-bold text-sm">📲 需要轉發到 LINE 群組或喜帖活動資訊？</p>
+        <p>一鍵複製整份簡明扼要的文字卡片。</p>
+      </div>
+      <button onclick="copyLineCard()" class="bg-amber-600 hover:bg-amber-700 text-white font-medium text-xs px-4 py-2 rounded-lg transition whitespace-nowrap">
+        <i class="fa-regular fa-copy"></i> 複製 LINE 格式文字
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-white', 'border-amber-500');
+        btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+      });
+
+      const activeContent = document.getElementById('content-' + tabId);
+      const activeTab = document.getElementById('tab-' + tabId);
+      if(activeContent) activeContent.classList.remove('hidden');
+      if(activeTab) {
+        activeTab.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+        activeTab.classList.add('bg-amber-500', 'text-white', 'border-amber-500');
+      }
+    }
+
+    function filterCity(val) {
+      if(val) switchTab(val);
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText("新北市板橋區民權路88號");
+      const text = document.getElementById('copyText');
+      text.innerText = "已複製地址！";
+      setTimeout(() => text.innerText = "複製酒店地址", 2000);
+    }
+
+    function copyLineCard() {
+      const lineText = `📍 台北新板希爾頓酒店（新北市板橋區民權路 88 號）\\n\\n🚅 高鐵/台鐵：板橋站「南3門」出站步行約 3 分鐘。\\n🚇 捷運：板南線「板橋站 2 號出口」步行約 4 分鐘。\\n🚗 自駕：導航設定「台北新板希爾頓酒店」，地下停車場位於民權路側。`;
+      navigator.clipboard.writeText(lineText);
+      alert("交通卡片已複製至剪貼簿！可直接貼上至 LINE 群組。");
+    }
+
+    // 初始化預設選中北部
+    switchTab('north');
+  </script>
+</body>
+</html>
